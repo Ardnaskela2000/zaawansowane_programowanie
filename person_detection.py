@@ -14,7 +14,7 @@ cv.imshow('Gray Grupa', gray)
 haar_cascade = cv.CascadeClassifier('haar_fuulbody.xml')
 
 faces_rect = haar_cascade.detectMultiScale(
-    gray, scaleFactor=1.1, minNeighbors=1)
+    gray, scaleFactor=1.2, minNeighbors=1)
 
 print(f'Number of faces found = {len(faces_rect)}')
 
