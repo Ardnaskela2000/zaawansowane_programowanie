@@ -1,24 +1,22 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template
 import os
-import person_detection
-
 
 app = Flask(__name__)
 
 picImage = os.path.join('static')
 
-app.config['UPLOAD_FOLDER'] = picImage
+app.config['IMG_DIRECTORY'] = picImage
 
 
 @app.route('/')
 def index():
-    return "wpisz /person_detection w ścieżkę"
+    return "do ścieżki wpisz /person_detection"
 
 
-@app.route('/person_detection', methods=['GET', 'POST'])
+@app.route('/person_detection', methods=['GET'])
 def person_detection():
-    pic1 = os.path.join(app.config['UPLOAD_FOLDER'], 'ludzie_2.jpg')
-    return render_template("index.html", user_image=pic1)
+    pic = os.path.join(app.config['IMG_DIRECTORY'], 'ludzie_2.jpg')
+    return render_template("index.html", user_image=pic)
 
 
 if __name__ == '__main__':

@@ -9,6 +9,8 @@
 </head>
 <body>
     <div><h1>Person Detection</h1></div>
-    <li><image src={{user_image}}}></li>
+    {% block content %}
+    <img src="{{ user_image }}" alt="error">
+    {% endblock %}
 </body>
 </html>
