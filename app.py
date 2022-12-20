@@ -10,7 +10,7 @@ app.config['IMG_DIRECTORY'] = picImage
 
 @app.route('/')
 def index():
-    return "do ścieżki wpisz /person_detection"
+    return "do ścieżki dopisz /person_detection"
 
 
 @app.route('/person_detection', methods=['GET'])

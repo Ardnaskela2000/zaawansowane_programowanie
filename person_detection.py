@@ -3,7 +3,7 @@ import imutils
 
 
 # Obraz
-img = cv.imread('static/ludzie_3.jpg')
+img = cv.imread('static/ludzie.jpg')
 img = imutils.resize(img, width=min(600, img.shape[1]))
 
 # cv.imshow('Grupa', img)
