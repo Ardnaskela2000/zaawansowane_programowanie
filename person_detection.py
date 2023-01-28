@@ -6,10 +6,10 @@ def PersonDetection(img):
     # Obraz
 
     filename = img
-    img = 'static/upload/' + filename
+    img = 'static/' + filename
 
     img = cv.imread(img)
-    #img = imutils.resize(img, width=600)
+    img = imutils.resize(img, width=600)
 
     # cv.imshow('Grupa', img)
 
@@ -28,17 +28,13 @@ def PersonDetection(img):
     for (x, y, w, h) in body_rect:
         cv.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), thickness=2)
 
-    cv.imwrite(('static/upload/ludzie.jpg' + filename), img)
-
-    cv.imshow('Rozpoznane osób ze zdjęcia', img)
-    cv.waitKey(0)
-    cv.destroyAllWindows()
+    cv.imwrite(('static/uploads/' + filename), img)
 
 
-PersonDetection("static/ludzie.jpg")
+# PersonDetection("ludzie.jpg")
 
-PersonDetection("static/ludzie_2.jpg")
+#PersonDetection("static/ludzie_2.jpg")
 
-PersonDetection("static/ludzie_3.jpg")
+#PersonDetection("static/ludzie_3.jpg")
 
-PersonDetection("static/ludzie_5.jpg")
+#PersonDetection("static/ludzie_5.jpg")

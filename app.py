@@ -1,20 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, flash, request, redirect, url_for, render_template
 import urllib.request
-import person_detection
 import os
 from werkzeug.utils import secure_filename
-
+import person_detection
 
 app = Flask(__name__)
 
-picImage = os.path.join('static/upload')
-
-app.config['IMG_DIRECTORY'] = picImage
-
-############################################################################################
-
-
-UPLOAD_FOLDER = 'static/upload'
+UPLOAD_FOLDER = 'static/uploads/'
 
 app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -22,8 +14,14 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 
 @app.route('/', methods=['POST'])
@@ -32,38 +30,23 @@ def upload_image():
         flash('No file part')
         return redirect(request.url)
     file = request.files['file']
-
     if file.filename == '':
         flash('No image selected for uploading')
         return redirect(request.url)
-
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         output = person_detection.PersonDetection(filename)
-        flash(output)
+        flash('Image successfully uploaded and displayed below')
         return render_template('index.html', filename=filename)
     else:
-        flash('Dozwolone obrazy to: png, jpg, jpeg, gif')
+        flash('Allowed image types are - png, jpg, jpeg, gif')
         return redirect(request.url)
 
 
 @app.route('/display/<filename>')
 def display_image(filename):
-    return redirect(url_for('static', filename='upload/' + filename), code=301)
-
-
-
-
-
-
-
-#############################################################################
-
-@app.route('/person_detection', methods=['GET'])
-def person_detection():
-    pic = os.path.join(app.config['IMG_DIRECTORY'], 'ludzie_2.jpg')
-    return render_template("index.html", user_image=pic)
+    return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
 
 if __name__ == '__main__':
