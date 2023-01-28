@@ -2,10 +2,14 @@ import cv2 as cv
 import imutils
 
 
-def persondetection(img):
+def PersonDetection(img):
     # Obraz
+
+    filename = img
+    img = 'static/upload/' + filename
+
     img = cv.imread(img)
-    img = imutils.resize(img, width=min(600, img.shape[1]))
+    #img = imutils.resize(img, width=600)
 
     # cv.imshow('Grupa', img)
 
@@ -24,15 +28,17 @@ def persondetection(img):
     for (x, y, w, h) in body_rect:
         cv.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), thickness=2)
 
-    cv.imshow('Rozpoznane osoby w Grupa', img)
+    cv.imwrite(('static/upload/ludzie.jpg' + filename), img)
 
+    cv.imshow('Rozpoznane osób ze zdjęcia', img)
     cv.waitKey(0)
-
     cv.destroyAllWindows()
 
 
-def showpersondetection():
-    persondetection("static/ludzie.jpg")
-    persondetection("static/ludzie_2.jpg")
-    persondetection("static/ludzie_3.jpg")
-    persondetection("static/ludzie_5.jpg")
+PersonDetection("static/ludzie.jpg")
+
+PersonDetection("static/ludzie_2.jpg")
+
+PersonDetection("static/ludzie_3.jpg")
+
+PersonDetection("static/ludzie_5.jpg")

@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import urllib.request
+import person_detection
 import os
 from werkzeug.utils import secure_filename
 
+
 app = Flask(__name__)
 
-picImage = os.path.join('static')
+picImage = os.path.join('static/upload')
 
 app.config['IMG_DIRECTORY'] = picImage
 
@@ -38,18 +40,17 @@ def upload_image():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        #print('upload_image filename: ' + filename)
-        flash('Image successfully uploaded and displayed below')
+        output = person_detection.PersonDetection(filename)
+        flash(output)
         return render_template('index.html', filename=filename)
     else:
-        flash('Allowed image types are - png, jpg, jpeg, gif')
+        flash('Dozwolone obrazy to: png, jpg, jpeg, gif')
         return redirect(request.url)
 
 
 @app.route('/display/<filename>')
 def display_image(filename):
-    #print('display_image filename: ' + filename)
-    return redirect(url_for('static', filename='uploads/' + filename), code=301)
+    return redirect(url_for('static', filename='upload/' + filename), code=301)
 
 
 
