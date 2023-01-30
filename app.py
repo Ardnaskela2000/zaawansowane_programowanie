@@ -26,21 +26,24 @@ def home():
 
 @app.route('/', methods=['POST'])
 def upload_image():
+
     if 'file' not in request.files:
-        flash('No file part')
+        flash('Wybierz plik.')
         return redirect(request.url)
     file = request.files['file']
+
     if file.filename == '':
-        flash('No image selected for uploading')
+        flash('Nie wybrano obrazu do przesłania.')
         return redirect(request.url)
+
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         output = person_detection.PersonDetection(filename)
-        flash('Image successfully uploaded and displayed below')
+        flash('Obraz pomyślnie przesłany. Poniżej znajduje się obraz z rozpoznanymi osobami.')
         return render_template('index.html', filename=filename)
     else:
-        flash('Allowed image types are - png, jpg, jpeg, gif')
+        flash('Dozwolone typy obrazów to: png, jpg, jpeg, gif.')
         return redirect(request.url)
 
 

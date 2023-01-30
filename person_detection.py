@@ -29,12 +29,3 @@ def PersonDetection(img):
         cv.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), thickness=2)
 
     cv.imwrite(('static/uploads/' + filename), img)
-
-
-# PersonDetection("ludzie.jpg")
-
-#PersonDetection("static/ludzie_2.jpg")
-
-#PersonDetection("static/ludzie_3.jpg")
-
-#PersonDetection("static/ludzie_5.jpg")
